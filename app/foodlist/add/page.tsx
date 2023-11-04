@@ -16,7 +16,7 @@ export default function Page() {
   };
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="container ml-6 md:mx-auto mt-10">
       <h1 className="text-3xl font-bold">食材登録</h1>
       <div className="mt-8">
         <div className="w-6/12">
