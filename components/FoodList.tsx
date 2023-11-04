@@ -1,5 +1,6 @@
 import { IFood, foodColumns } from "@/common/interfaces/food";
 import { DeleteIcon } from "@/common/logos/DeleteIcon";
+import { EditIcon } from "@/common/logos/EditIcon";
 import { timestampStringToLocaleDateString } from "@/common/time";
 import { deleteFood } from "@/services/supabase";
 import {
@@ -12,6 +13,7 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface IFoodListProps {
@@ -19,6 +21,7 @@ interface IFoodListProps {
 }
 
 export const FoodList: React.FC<IFoodListProps> = (props) => {
+  const router = useRouter();
   const [foods, setFoods] = useState<IFood[]>(props.foods);
 
   return (
@@ -50,6 +53,14 @@ export const FoodList: React.FC<IFoodListProps> = (props) => {
                   </TableCell>
                   <TableCell>
                     <div className="relative flex items-center gap-2">
+                      <Button
+                        className="text-lg text-success cursor-pointer active:opacity-50"
+                        color="success"
+                        variant="ghost"
+                        onClick={() => router.push(`/foodlist/edit/${food.id}`)}
+                      >
+                        <EditIcon />
+                      </Button>
                       <Button
                         className="text-lg text-danger cursor-pointer active:opacity-50"
                         color="danger"

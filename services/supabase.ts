@@ -21,6 +21,34 @@ export const getFoodData = async () => {
   return foodData;
 };
 
+export const getEditFood = async (foodId: number): Promise<IFood> => {
+  const { data, error } = await supabase
+    .from("Food")
+    .select("*")
+    .eq("id", foodId);
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data) {
+    throw new Error("No data");
+  }
+
+  const foodData = data as IFood[];
+  return foodData[0];
+};
+
+export const updateFood = async (food: IFood, router: AppRouterInstance) => {
+  const { error } = await supabase.from("Food").update(food).eq("id", food.id);
+
+  if (error) {
+    throw error;
+  }
+
+  router.push("/foodlist");
+};
+
 export const saveFood = async (food: IFood, router: AppRouterInstance) => {
   food.created_at = new Date().toISOString().toLocaleString();
   const { error } = await supabase.from("Food").insert(food);
