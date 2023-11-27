@@ -5,9 +5,44 @@ import { SetStateAction } from "react";
 
 const supabaseUrl = "https://toekbfoleaizavmqxgav.supabase.co";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey!);
+export const supabase = createClient(supabaseUrl, supabaseKey!);
 
-export const getFoodData = async () => {
+export const login = async (
+  email: string,
+  password: string,
+  router: AppRouterInstance
+) => {
+  if (!email || !password) {
+    throw new Error("メールアドレス、パスワードは必須です。");
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data) {
+    throw new Error("ログインに失敗しました。");
+  }
+
+  router.replace("/foodlist");
+};
+
+export const logout = async (router: AppRouterInstance) => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw error;
+  }
+
+  router.push("/login");
+};
+
+export const getFoodData = async (): Promise<IFood[]> => {
   const { data, error } = await supabase.from("Food").select("*");
   if (error) {
     throw error;

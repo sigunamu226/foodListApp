@@ -5,12 +5,15 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
 } from "@nextui-org/react";
 import { AcmeLogo } from "@/common/logos/AcmeLogo";
+import { useRouter } from "next/navigation";
+import { logout } from "@/services/supabase";
 
-export default function Header() {
+export const Header: React.FC = () => {
+  const router = useRouter();
+
   return (
     <Navbar className="dark" maxWidth="full">
       <NavbarBrand className="text-white">
@@ -21,14 +24,11 @@ export default function Header() {
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">ログアウト</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
+          <Button variant="light" onClick={() => logout(router)}>
+            ログアウト
           </Button>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
   );
-}
+};

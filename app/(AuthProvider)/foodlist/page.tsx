@@ -10,11 +10,9 @@ const Body: React.FC = () => {
   const foods = use(getFoodData());
 
   return (
-    <>
-      <div className="container mx-auto">
-        <FoodList foods={foods} />
-      </div>
-    </>
+    <div className="container mx-auto">
+      <FoodList foods={foods} />
+    </div>
   );
 };
 
