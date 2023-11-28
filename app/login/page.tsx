@@ -8,15 +8,28 @@ import {
   Image,
   Input,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import SharkImage from "@/common/assets/images/shark.jpg";
-import { login } from "@/services/supabase";
+import { login, supabase } from "@/services/supabase";
 import { useRouter } from "next/navigation";
 
 export default function Page(): JSX.Element {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (data.session) {
+          router.push("/foodlist");
+        }
+      } catch (error) {
+        console.error("Error checking session:", error);
+      }
+    })();
+  }, [router]);
 
   const onClick = () => {
     login(email, password, router);
