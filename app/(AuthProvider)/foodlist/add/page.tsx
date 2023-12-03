@@ -1,17 +1,19 @@
 "use client";
 import { IFood } from "@/common/interfaces/food";
+import { AuthContext } from "@/providers/AuthProvider";
 import { initFood } from "@/services/food_form";
 import { saveFood } from "@/services/supabase";
 import { Button, Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function Page() {
+  const { currentUser } = useContext(AuthContext);
   const router = useRouter();
   const [food, setFood] = useState<IFood>(initFood());
 
   const save = () => {
-    saveFood(food, router);
+    saveFood(food, router, currentUser?.id!);
   };
 
   return (
