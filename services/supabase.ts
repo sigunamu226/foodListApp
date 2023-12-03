@@ -1,4 +1,5 @@
 import { IFood } from "@/common/interfaces/food";
+import { user } from "@nextui-org/react";
 import { createClient } from "@supabase/supabase-js";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { SetStateAction } from "react";
@@ -42,8 +43,11 @@ export const logout = async (router: AppRouterInstance) => {
   router.push("/login");
 };
 
-export const getFoodData = async (): Promise<IFood[]> => {
-  const { data, error } = await supabase.from("Food").select("*");
+export const getFoodData = async (userId: string): Promise<IFood[]> => {
+  const { data, error } = await supabase
+    .from("Food")
+    .select("*")
+    .eq("user_id", userId);
   if (error) {
     throw error;
   }
@@ -102,6 +106,7 @@ export const saveFood = async (
 };
 
 export const deleteFood = async (
+  userId: string,
   foodId: number,
   setFoods: React.Dispatch<SetStateAction<IFood[]>>
 ) => {
@@ -111,5 +116,5 @@ export const deleteFood = async (
     throw error;
   }
 
-  setFoods(await getFoodData());
+  setFoods(await getFoodData(userId));
 };

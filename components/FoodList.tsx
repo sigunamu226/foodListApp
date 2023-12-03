@@ -65,7 +65,9 @@ export const FoodList: React.FC<IFoodListProps> = (props) => {
                         className="text-lg text-danger cursor-pointer active:opacity-50"
                         color="danger"
                         variant="ghost"
-                        onClick={() => deleteFood(food.id, setFoods)}
+                        onClick={() =>
+                          deleteFood(food.user_id!, food.id, setFoods)
+                        }
                       >
                         <DeleteIcon />
                       </Button>
