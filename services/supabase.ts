@@ -84,12 +84,20 @@ export const updateFood = async (food: IFood, router: AppRouterInstance) => {
   router.push("/foodlist");
 };
 
-export const saveFood = async (food: IFood, router: AppRouterInstance) => {
+export const saveFood = async (
+  food: IFood,
+  router: AppRouterInstance,
+  userId: string
+) => {
+  food.user_id = userId;
   food.created_at = new Date().toISOString().toLocaleString();
+
   const { error } = await supabase.from("Food").insert(food);
+
   if (error) {
     throw error;
   }
+
   router.push("/foodlist");
 };
 

@@ -2,7 +2,7 @@
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { supabase } from "@/services/supabase";
 import { useRouter } from "next/navigation";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter();
