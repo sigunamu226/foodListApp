@@ -1,5 +1,4 @@
 import { IFood } from "@/common/interfaces/food";
-import { user } from "@nextui-org/react";
 import { createClient } from "@supabase/supabase-js";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { SetStateAction } from "react";
