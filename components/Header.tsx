@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
         </a>
       </NavbarBrand>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="flex">
           <Button variant="light" onClick={() => logout(router)}>
             ログアウト
           </Button>
