@@ -20,7 +20,7 @@ export const FormBody: React.FC<IFormBodyProps> = (props) => {
   return (
     <div className="container pl-6 md:mx-auto mt-10">
       <h1 className="text-3xl font-bold">食材編集</h1>
-      <div className="mt-8">
+      <div className="mt-12">
         <div className="w-2/3 md:w-6/12">
           <Input
             className="[&>label]:text-lg [&>label]:font-bold"
@@ -32,7 +32,7 @@ export const FormBody: React.FC<IFormBodyProps> = (props) => {
             onChange={(e) => setFood({ ...food, name: e.target.value })}
           />
         </div>
-        <div className="mt-7 w-2/3 md:w-6/12">
+        <div className="mt-12 w-2/3 md:w-6/12">
           <Input
             className="[&>label]:text-lg [&>label]:font-bold"
             type="text"
@@ -43,7 +43,7 @@ export const FormBody: React.FC<IFormBodyProps> = (props) => {
             onChange={(e) => setFood({ ...food, rest_count: e.target.value })}
           />
         </div>
-        <div className="mt-7 w-2/3 md:w-6/12">
+        <div className="mt-12 w-2/3 md:w-6/12">
           <Input
             className="[&>label]:text-lg [&>label]:font-bold"
             type="date"
