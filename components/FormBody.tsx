@@ -1,25 +1,30 @@
 "use client";
 import { IFood } from "@/common/interfaces/food";
-import { updateFood } from "@/services/supabase";
+import { AuthContext } from "@/providers/AuthProvider";
+import { saveFood } from "@/services/supabase";
 import { Button, Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 interface IFormBodyProps {
+  isCreate?: boolean;
   food: IFood;
 }
 
 export const FormBody: React.FC<IFormBodyProps> = (props) => {
+  const { currentUser } = useContext(AuthContext);
   const router = useRouter();
   const [food, setFood] = useState<IFood>(props.food);
 
-  const update = () => {
-    updateFood(food, router);
+  const save = () => {
+    saveFood(food, router, currentUser?.id!, props.isCreate);
   };
 
   return (
     <div className="container pl-6 md:mx-auto mt-10">
-      <h1 className="text-3xl font-bold">食材編集</h1>
+      <h1 className="text-3xl font-bold">
+        {props.isCreate ? "食材登録" : "食材編集"}
+      </h1>
       <div className="mt-12">
         <div className="w-2/3 md:w-6/12">
           <Input
@@ -50,6 +55,9 @@ export const FormBody: React.FC<IFormBodyProps> = (props) => {
             label="賞味期限"
             labelPlacement="outside"
             placeholder="賞味期限を入力"
+            value={new Date(food.expiration_at ?? "").toLocaleDateString(
+              "sv-SE"
+            )}
             onChange={(e) =>
               setFood({
                 ...food,
@@ -62,7 +70,7 @@ export const FormBody: React.FC<IFormBodyProps> = (props) => {
         </div>
       </div>
       <div className="mt-8">
-        <Button onClick={update}>更新</Button>
+        <Button onClick={save}>保存</Button>
         <Button
           className="ml-4"
           color="danger"
