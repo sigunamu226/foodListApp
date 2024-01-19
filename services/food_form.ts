@@ -7,6 +7,6 @@ export const initFood = (): IFood => {
     name: "",
     rest_count: "",
     expiration_at: null,
-    created_at: null,
+    created_at: new Date().toISOString().toLocaleString(),
   };
 };

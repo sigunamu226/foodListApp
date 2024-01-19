@@ -11,6 +11,8 @@ const Body: React.FC = () => {
   const { currentUser } = useContext(AuthContext);
   const foods = use(getFoodData(currentUser?.id!));
 
+  foods.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
+
   return (
     <div className="container mx-auto">
       <FoodList foods={foods} />

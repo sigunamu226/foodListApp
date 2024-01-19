@@ -3,7 +3,7 @@ export interface IFood {
   user_id: string | null;
   name: string | null;
   rest_count: string | null;
-  created_at: string | null;
+  created_at: string;
   expiration_at: string | null;
 }
 
