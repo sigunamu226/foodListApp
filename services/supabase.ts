@@ -77,28 +77,30 @@ export const getEditFood = async (foodId: number): Promise<IFood> => {
   return foodData[0];
 };
 
-export const updateFood = async (food: IFood, router: AppRouterInstance) => {
-  const { error } = await supabase.from("Food").update(food).eq("id", food.id);
-
-  if (error) {
-    throw error;
-  }
-
-  router.push("/foodlist");
-};
-
 export const saveFood = async (
   food: IFood,
   router: AppRouterInstance,
-  userId: string
+  userId: string,
+  isCreate?: boolean
 ) => {
-  food.user_id = userId;
-  food.created_at = new Date().toISOString().toLocaleString();
+  if (!isCreate) {
+    const { error } = await supabase
+      .from("Food")
+      .update(food)
+      .eq("id", food.id);
 
-  const { error } = await supabase.from("Food").insert(food);
+    if (error) {
+      throw error;
+    }
+  } else {
+    food.user_id = userId;
+    food.created_at = new Date().toISOString().toLocaleString();
 
-  if (error) {
-    throw error;
+    const { error } = await supabase.from("Food").insert(food);
+
+    if (error) {
+      throw error;
+    }
   }
 
   router.push("/foodlist");
