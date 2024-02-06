@@ -32,5 +32,5 @@ export async function GET() {
   const response = await fetch(lineApiEndpoint, optionParams);
   const json = await response.json();
 
-  console.log(json);
+  return Response.json(json);
 }
