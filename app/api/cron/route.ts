@@ -1,5 +1,4 @@
 import { getFoodData } from "@/services/supabase";
-import { NextResponse } from "next/server";
 
 const SUPABASE_USER_ID = process.env.SUPABASE_USER_ID!;
 const lineApiEndpoint = "https://api.line.me/v2/bot/message/push";
@@ -31,9 +30,7 @@ export async function GET() {
     }),
   };
   const response = await fetch(lineApiEndpoint, optionParams);
-  const json = await response.json();
+  const data = await response.json();
 
-  console.log(json);
-
-  return NextResponse.json({ message: "success" });
+  return Response.json({ data });
 }
