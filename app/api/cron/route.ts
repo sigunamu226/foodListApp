@@ -1,11 +1,12 @@
 import { getFoodData } from "@/services/supabase";
+import { NextResponse } from "next/server";
 
 const SUPABASE_USER_ID = process.env.SUPABASE_USER_ID!;
 const lineApiEndpoint = "https://api.line.me/v2/bot/message/push";
 const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN!;
 const toUserId = process.env.LINE_USER_ID!;
 
-export async function handler() {
+export async function GET() {
   const foods = await getFoodData(SUPABASE_USER_ID);
   const expiredFoods = foods.filter((food) => {
     if (!food.expiration_at) return false;
@@ -33,4 +34,6 @@ export async function handler() {
   const json = await response.json();
 
   console.log(json);
+
+  return NextResponse.json({ message: "success" });
 }
