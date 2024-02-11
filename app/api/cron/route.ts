@@ -12,7 +12,9 @@ export async function GET() {
     return new Date(food.expiration_at) < new Date();
   });
 
-  if (expiredFoods.length === 0) return;
+  if (expiredFoods.length === 0) {
+    return Response.json({ message: "期限切れの食品はありません" }); // 期限切れの食品がない場合にメッセージを含むレスポンスを返す
+  }
 
   const messageText = expiredFoods
     .map((food) => `${food.name} が期限切れです`)
@@ -30,6 +32,12 @@ export async function GET() {
     }),
   };
   const response = await fetch(lineApiEndpoint, optionParams);
+
+  // fetchの結果がundefinedでないことを確認し、undefinedの場合はエラーレスポンスを返す
+  if (!response) {
+    return Response.json({ message: "外部APIからの応答がありません" });
+  }
+
   const data = await response.json();
 
   return Response.json({ data });
