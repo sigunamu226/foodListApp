@@ -17,8 +17,12 @@ export async function GET() {
   }
 
   const messageText = expiredFoods
-    .map((food) => `${food.name} が期限切れです`)
-    .join("\n");
+    .map((food, index) =>
+      expiredFoods.length === index + 1
+        ? `${food.name}が期限切れ😡`
+        : `${food.name}と`
+    )
+    .join("");
 
   const optionParams = {
     method: "post",
