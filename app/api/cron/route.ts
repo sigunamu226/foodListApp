@@ -1,4 +1,5 @@
 import { getFoodData } from "@/services/supabase";
+import { v4 as uuidv4 } from "uuid";
 
 const SUPABASE_USER_ID = process.env.SUPABASE_USER_ID!;
 const lineApiEndpoint = "https://api.line.me/v2/bot/message/push";
@@ -29,6 +30,7 @@ export async function GET() {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${channelAccessToken}`,
+      "X-Line-Retry-Key": uuidv4(),
     },
     body: JSON.stringify({
       to: toUserId,
@@ -43,6 +45,7 @@ export async function GET() {
   }
 
   const data = await response.json();
+  console.log(data);
 
   return Response.json({ data });
 }
