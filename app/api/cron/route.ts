@@ -1,6 +1,8 @@
 import { getFoodData } from "@/services/supabase";
 import { v4 as uuidv4 } from "uuid";
 
+export const revalidate = 1;
+
 const SUPABASE_USER_ID = process.env.SUPABASE_USER_ID!;
 const lineApiEndpoint = "https://api.line.me/v2/bot/message/push";
 const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN!;
